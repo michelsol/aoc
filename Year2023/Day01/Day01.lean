@@ -1,40 +1,30 @@
 import Std
+import Aoc
 
-def calibration (s : String) : Option Nat :=
-  let l := (s.data.filter Char.isDigit).map λ c => c.toNat - '0'.toNat
-  do
-    let first ← l.get? 0
-    let last ← l.getLast?
-    return first * 10 + last
+def calibration1 (s : String) :=
+  let a := s.toArray.filter Char.isDigit |>.map λ c => c.toNat - '0'.toNat
+  do return (← a.get? 0) * 10 + (← a.back?)
 
-def part1 (lines : Array String) := do
-  let l ← lines.mapM calibration
-  return l.foldr (. + .) 0
+def numbers1 := #["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+def numbers1r := numbers1.map String.reverse
+def numbers2 := numbers1.mapIdx λ k x => (x, k.val + 1)
+def numbers2r := numbers1r.mapIdx λ k x => (x, k.val + 1)
+def numbers3 := Array.natRange 1 10 |>.map λ k => (s!"{k}", k)
 
-def String.reverse (s : String) := String.mk s.data.reverse
-def numbers := #["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-def numbers2 := ((Array.range 9).map (. + 1)).map λ k => (s!"{k}", k)
-def ns := numbers.mapIdx λ k x => (x, k.val + 1)
-def nsRev := (numbers.map String.reverse).mapIdx λ k x => (x, k.val + 1)
-
-def calibration2 (s : String) : Option Nat :=
+def calibration2 (s : String) :=
   let sr := s.reverse
-  let srlength := sr.length
-  let a := (ns ++ numbers2).filterMap λ (ds, d) => (s.findSubstr? ds).map λ x => (x.startPos.1, d)
-  let b := (nsRev ++ numbers2).filterMap λ (ds, d) => (sr.findSubstr? ds).map λ x => (srlength - x.startPos.1, d)
+  let srl := sr.length
+  let a := numbers2 ++ numbers3 |>.filterMap λ (c, d) => s.findSubstr? c |>.map λ x => (x.startPos.1, d)
+  let b := numbers2r ++ numbers3 |>.filterMap λ (c, d) => sr.findSubstr? c |>.map λ x => (srl - x.startPos.1, d)
   let _ : Ord (Nat × Nat) := lexOrd
-  do
-    let first ← a.min?
-    let last ← b.max?
-    return first.2 * 10 + last.2
+  do return (← a.min?).2 * 10 + (← b.max?).2
 
-def part2 (lines : Array String) := do
-  let l ← lines.mapM calibration2
-  return l.foldr (. + .) 0
+def part (lines : Array String) (calibration : String → Option Nat) :=
+  lines.mapM calibration |>.map Array.sum
 
 def main : IO Unit := do
-  let lines ← IO.FS.lines "Year2023/Day01/in.txt"
-  IO.println s!"part1: {part1 lines}"
-  IO.println s!"part2: {part2 lines}"
+  let lines ← IO.FS.lines "Year2023/Day01/in1.txt"
+  IO.println s!"part1: {part lines calibration1}"
+  IO.println s!"part2: {part lines calibration2}"
 
 -- #eval main
