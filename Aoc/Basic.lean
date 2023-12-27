@@ -12,7 +12,10 @@ end String
 namespace Array
 
 /-- The array `#[a, a + 1, ..., b - 1]`. -/
-def natRange (a b : Nat) := (range (b - a)).map (. + a)
+def natRange (a b : Nat) := range (b - a) |>.map (. + a)
+
+/-- The array `#[a, a + 1, ..., b - 1]`. -/
+def intRange (a b : Int) := range (b - a).toNat |>.map Int.ofNat |>.map (. + a)
 
 def sum [Add α] [OfNat α 0] (a : Array α) := a.foldl (. + .) 0
 

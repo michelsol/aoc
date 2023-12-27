@@ -7,8 +7,9 @@ package «aoc» where
 lean_lib «Aoc» where
   -- add library configuration options here
 
-@[default_target]
-lean_exe «2023day01» where root := `Year2023.Day01.Day01
+@[default_target] lean_exe «2023day01» where root := `Year2023.Day01.Day01
+@[default_target] lean_exe «2023day02» where root := `Year2023.Day02.Day02
+@[default_target] lean_exe «2023day03» where root := `Year2023.Day03.Day03
 
 require std from git "https://github.com/leanprover/std4" @ "ee49cf8fada1bf5a15592c399a925c401848227f"
 require Qq from git "https://github.com/leanprover-community/quote4" @ "ccba5d35d07a448fab14c0e391c8105df6e2564c"
