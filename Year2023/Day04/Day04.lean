@@ -3,8 +3,8 @@ import Aoc
 
 def parseLine (line : String) :=
   let all := line.splitOn ":" |>.get! 1
-  let winning := all.splitOn "|" |>.get! 0 |>.splitOn " " |> List.toArray |>.filterMap String.toNat?
-  let numbers := all.splitOn "|" |>.get! 1 |>.splitOn " " |> List.toArray |>.filterMap String.toNat?
+  let winning := all.splitOn "|" |>.get! 0 |>.arrSplitOn " " |>.filterMap String.toNat?
+  let numbers := all.splitOn "|" |>.get! 1 |>.arrSplitOn " " |>.filterMap String.toNat?
   (winning, numbers)
 
 def cardScore (winning numbers : Array Nat) : Nat := Id.run do
