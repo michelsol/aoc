@@ -40,15 +40,18 @@ def part1 (lines : Array String) :=
 def mapInterval (a b : Nat) (map : Array MapEntry) : Array (Nat × Nat) := Id.run do
   let mut r := #[]
   let mut x := a
-  let mut j := 0
-  repeat
-    if x ≥ b then break
-
-    let y := map[j]!.src + map[j]!.len
-    if x ≥ map[j]!.src ∧ x < y then
-
-      x := map[j]!.len
-    j := j + 1
+  for e in map do
+    let aj := e.src
+    let bj := aj + e.len
+    let aj' := e.dst
+    let bj' := aj' + e.len
+    -- unfinished
+    if x < aj then
+      r := r.push (x - aj + aj', bj - aj + aj')
+      x := aj
+    if x ≥ aj ∧ x < bj then
+      r := r.push (x - aj + aj', bj - aj + aj')
+      x := bj
   return r
 
 
