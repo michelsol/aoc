@@ -12,6 +12,7 @@ lean_lib «Aoc» where
 @[default_target] lean_exe «2023day03» where root := `Year2023.Day03.Day03
 @[default_target] lean_exe «2023day04» where root := `Year2023.Day04.Day04
 @[default_target] lean_exe «2023day05» where root := `Year2023.Day05.Day05
+@[default_target] lean_exe «2023day06» where root := `Year2023.Day06.Day06
 
 require std from git "https://github.com/leanprover/std4" @ "ee49cf8fada1bf5a15592c399a925c401848227f"
 require Qq from git "https://github.com/leanprover-community/quote4" @ "ccba5d35d07a448fab14c0e391c8105df6e2564c"
