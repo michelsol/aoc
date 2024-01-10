@@ -73,12 +73,11 @@ def part2 (lines : Array String) :=
     for map in maps do
       r := mapArray r map
     return r
-  locations
-  -- locations.get! 0 |>.1
+  locations.get! 0 |>.1
 
 def main : IO Unit := do
   let lines ← IO.FS.lines "Year2023/Day05/in1.txt"
-  -- IO.println s!"part1: {part1 lines}"
+  IO.println s!"part1: {part1 lines}"
   IO.println s!"part2: {part2 lines}"
 
 -- #eval timeit "main : " $ main
